@@ -25,8 +25,8 @@ class AuthController extends Core_Controller_Abstract
     	}
 
     	// Получение переменных методом POST
-    	$userName = $this->request->getPost('username');
-    	$password = $this->request->getPost('password');
+    	$userName = $this->getPost('username');
+    	$password = $this->getPost('password');
     	
     	$mng = Core_UserCenter_Manager::getInstance();
 

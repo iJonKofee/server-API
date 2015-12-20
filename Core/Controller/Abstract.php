@@ -45,5 +45,31 @@ abstract class Core_Controller_Abstract extends Phalcon\MVC\Controller
 
 		return $this->_manager;
 	}
+	
+	/**
+	 * Вытягиваем из $_GET значение по ключу, если такового нет - отдает значение по умолчанию, которое переданно 2м параметром
+	 * @param string|number $name
+	 * @param string|number $default
+	 * @return string|number
+	 */
+	protected function getParam($name, $default = NULL)
+	{
+	    $value = $this->request->getQuery($name);
+	    
+	    return $value ? $value : $default;
+	}
+	
+	/**
+	 * Вытягиваем из $_POST значение по ключу, если такового нет - отдает значение по умолчанию, которое переданно 2м параметром
+	 * @param string|number $name
+	 * @param string|number $default
+	 * @return string|number
+	 */
+	protected function getPost($name, $default = NULL)
+	{
+	    $value = $this->request->getQuery($name);
+	    
+	    return $value ? $value : $default;
+	}
 
 }
