@@ -107,5 +107,56 @@ abstract class Core_Controller_Abstract extends Phalcon\MVC\Controller
 		
 		return count($rows);
 	}
+	
+	/**
+	 * Action получения срок из таблицы контроллера
+	 */
+	public function getlistAction()
+	{
+	    $this->view->setRenderLevel(Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
+	    
+	    //Инициализация селекта ля дальнейшей работы с ним
+	    $this->getSelect();
+	     
+	    $paramSort = trim($this->getParam('sort', 'id'));
+	    $paramDir = $this->getParam('dir', 'asc');
+	    $paramPage = (int) $this->getParam('page', 1);
+	    $paramResults = (int) $this->getParam('results', 10);
+	    $paramNoPager = $this->getParam('nopager');
+	
+	    $allRowsCount = $this->getRowsCount();
+	
+	    $pagesCount = 1;
+	    if (!$paramNoPager)
+	    {
+	        $pagesCount = ceil($allRowsCount / $paramResults);
+	        if ($paramPage < 1 || $paramPage > $pagesCount)
+	        {
+	            $paramPage = 1;
+	        }
+	
+	        $paramStart = ($paramPage - 1) * $paramResults;
+	
+	        $this->_select->limit($paramResults, $paramStart);
+	    }
+	
+	    if (is_array($paramSort))
+	    {
+	        $this->_select->order($paramSort);
+	    }
+	    else
+	    {
+	        $this->_select->order($paramSort . ' ' . $paramDir);
+	    }
+	
+	    $listObjects = $this->getSelect()->execute();
+	
+	    $this->view->listObjects = $listObjects;
+	
+	    $this->view->page = $paramPage;
+	    $this->view->results = $paramResults;
+	    $this->view->pagesCount = $pagesCount;
+	    $this->view->totalCount = $allRowsCount;
+	}
 
 }
