@@ -72,4 +72,20 @@ abstract class Core_Controller_Abstract extends Phalcon\MVC\Controller
 	    return $value ? $value : $default;
 	}
 
+	/**
+	 * Возвращает общее кол-во строк таблице
+	 *
+	 * @return integer
+	 */
+	protected function getRowsCount()
+	{
+	    
+		$tbl = $this->getTable();
+
+		//@todo Придумать что-то побыстрее. К примеру, SELECT COUNT(*) FROM `table`
+		$rows = $tbl::find();
+		
+		return count($rows);
+	}
+
 }
