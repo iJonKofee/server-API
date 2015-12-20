@@ -7,4 +7,9 @@ class TestController extends Core_Controller_Abstract
 	{
 		$this->view->setRenderLevel(Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
 	}
+
+	public function blaAction()
+	{
+		echo 1;
+	}
 }

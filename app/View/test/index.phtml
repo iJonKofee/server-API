@@ -1,1 +1,14 @@
-ajfsdjfhds
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<button id="a">Test</button>
+<script>
+	$('#a').click(function(){
+		console.log(1);
+		$.get(
+			'/test/getlist',
+			function(data)
+			{
+				console.log(data)
+			}
+		);
+	});
+</script>
