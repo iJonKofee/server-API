@@ -27,12 +27,6 @@ class Core_UserCenter_Table extends Core_Db_Table_Abstract
     private $type;
 
     /**
-     *
-     * @var string
-     */
-    private $hash;
-
-    /**
      * Method to set the value of field login
      *
      * @param string $login
@@ -72,19 +66,6 @@ class Core_UserCenter_Table extends Core_Db_Table_Abstract
     }
 
     /**
-     * Method to set the value of field type
-     *
-     * @param integer $type
-     * @return $this
-     */
-    public function setHash($hash)
-    {
-        $this->hash = $hash;
-
-        return $this;
-    }
-
-    /**
      * Returns the value of field login
      *
      * @return string
@@ -112,16 +93,6 @@ class Core_UserCenter_Table extends Core_Db_Table_Abstract
     public function getType()
     {
         return $this->type;
-    }
-
-    /**
-     * Returns the value of field type
-     *
-     * @return integer
-     */
-    public function getHash()
-    {
-        return $this->hash;
     }
 
 }
