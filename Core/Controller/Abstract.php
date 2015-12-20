@@ -15,6 +15,11 @@ abstract class Core_Controller_Abstract extends Phalcon\MVC\Controller
 	 * @var Core_Model_Manager
 	 */
 	private $_manager;
+	
+	/**
+	 * @var Core_Db_Table_Select
+	 */
+	protected $_select;
 
 	/**
 	 * @return Core_Db_Table_Abstract
@@ -44,6 +49,21 @@ abstract class Core_Controller_Abstract extends Phalcon\MVC\Controller
 		}
 
 		return $this->_manager;
+	}
+	
+	/**
+	 * @return Core_Db_Table_Select
+	 */
+	protected function getSelect()
+	{
+	    if (is_null($this->_select))
+	    {
+	        $tbl = $this->getTable();
+	        
+	        $this->_select = $tbl::query();
+	    }
+	    
+	    return $this->_select;
 	}
 	
 	/**
