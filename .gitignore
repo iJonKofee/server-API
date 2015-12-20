@@ -3,3 +3,6 @@
 .project
 
 .settings/org.eclipse.php.core.prefs
+
+#Игнорирование папки Phalcon, т.к. в репозитории она не нужна
+/Phalcon/*
