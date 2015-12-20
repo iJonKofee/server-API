@@ -69,7 +69,7 @@ try
     $di->set('view', function() use ($config)
     {
         $view = new Phalcon\Mvc\View();
-        $view->setViewsDir('../' . $config->application->viewsDir);
+        $view->setViewsDir('../' . $config->application->viewsDir . $config->application->theme);
         return $view;
     });
 
