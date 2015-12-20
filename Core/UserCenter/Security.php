@@ -16,7 +16,8 @@ class Core_UserCenter_Security extends Phalcon\Mvc\User\Plugin
 			$acl->setDefaultAction(Phalcon\Acl::DENY);
 
 			//Регистрация роллей из Core_UserCenter_Enum
-			foreach ($userEnum->getAll() as $name => $value) {
+			foreach ($userEnum->getAll() as $name => $value) 
+			{
 				$acl->addRole($name);
 			}
 
@@ -37,14 +38,34 @@ class Core_UserCenter_Security extends Phalcon\Mvc\User\Plugin
 						'index'
 					]
 			];
-			foreach ($publicResources as $resource => $actions) {
+			
+			$privateResources = [
+			    'test' =>
+			    [
+			        'bla',
+			        'getlist'
+			    ]
+			];
+			
+			foreach (array_merge_recursive($privateResources, $publicResources) as $resource => $actions) 
+			{
 				$acl->addResource(new Phalcon\Acl\Resource($resource), $actions);
 			}
-
+			
 			//Grant access to public areas to both users and guests
-			foreach ($publicResources as $resource => $actions) {
-				foreach ($actions as $action){
+			foreach ($publicResources as $resource => $actions) 
+			{
+				foreach ($actions as $action)
+				{
 					$acl->allow('*', $resource, $action);
+				}
+			}
+			
+			foreach ($privateResources as $resource => $actions) 
+			{
+				foreach ($actions as $action)
+				{
+					$acl->allow($userEnum->getName($userEnum::ADMIN), $resource, $action);
 				}
 			}
 
@@ -69,19 +90,21 @@ class Core_UserCenter_Security extends Phalcon\Mvc\User\Plugin
         $acl = $this->_getAcl();
         if ($acl->isAllowed($userEnum->getName($userEnum::GUEST), $controller, $action)) return TRUE;
 
-        // Проверяем, установлена ли в сессии переменная "auth" для определения активной роли.
-        $auth = $this->session->has('auth_type');
-
-        //Если токена нет, но перенаправляем на страницу авторизации
-        if (!$auth)
+        // Проверяем, установлен ли в сессии user
+        $isAuth = $this->session->has('user');
+        
+        //Если не авторизован, но перенаправляем на страницу авторизации
+        if (!$isAuth)
         {
         	return $this->_forwardToLogin();
         }
+        
+        $user = $this->session->get('user');
 
-        $role = $this->session->get('auth_type')['type'];
-
+        $role = $user->type;
+        
         // Проверяем, имеет ли данная роль доступ к контроллеру (ресурсу)
-        $allowed = $acl->isAllowed($role, $controller, $action);
+        $allowed = $acl->isAllowed($userEnum->getName($role), $controller, $action);
 
         if ($allowed != Phalcon\Acl::ALLOW)
         {
