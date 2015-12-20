@@ -1,7 +1,3 @@
-
-#Игнорирование папки Phalcon, т.к. в репозитории она не нужна
-/Phalcon/*
-
 .buildpath
 
 .project
