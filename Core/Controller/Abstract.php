@@ -19,7 +19,7 @@ abstract class Core_Controller_Abstract extends Phalcon\MVC\Controller
 	/**
 	 * @return Core_Db_Table_Abstract
 	 */
-	public function getTable()
+	protected function getTable()
 	{
 		if (is_null($this->_table))
 		{
@@ -34,7 +34,7 @@ abstract class Core_Controller_Abstract extends Phalcon\MVC\Controller
 	/**
 	 * @return Core_Model_Manager
 	 */
-	public function getManager()
+	protected function getManager()
 	{
 		if (is_null($this->_manager))
 		{
