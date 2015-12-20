@@ -87,7 +87,7 @@ abstract class Core_Controller_Abstract extends Phalcon\MVC\Controller
 	 */
 	protected function getPost($name, $default = NULL)
 	{
-	    $value = $this->request->getQuery($name);
+	    $value = $this->request->getPost($name);
 	    
 	    return $value ? $value : $default;
 	}
