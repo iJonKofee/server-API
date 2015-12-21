@@ -64,10 +64,10 @@ abstract class Core_Db_Table_Abstract extends \Phalcon\Mvc\Model
 	
 	public function __call($method, $argument)
 	{
-	    //Если геттера или сеттера нет - Исключение
+	    //Если геттера или сеттера нет - вызываем родительский
 	    if (!method_exists($this, 'set' . $method) || !method_exists($this, 'get' . $method))
 	    {
-	        throw new Core_Exception("Method '$method()' does't exists in '" . get_called_class() . "'");
+	        parent::__call($method, $argument);
 	    }
 	    
 	    if (boolval($argument))
