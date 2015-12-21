@@ -1,0 +1,51 @@
+<form role="form" id="addFormCompany">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Name</label>
+        <input name="name" type="text" class="form-control" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Logo</label>
+        <input name="logo" type="text" class="form-control" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+		<select class="full-width" data-init-plugin="select2" name="category_id">
+			<?php foreach ($rowsCategory as $category) {?>
+				<option value="<?= $category->id()?>"><?= $category->name()?></option>
+			<?php }?>
+		</select>
+    </div>
+  </div>
+  <button class="hide" type="submit"></button>
+</form>
+
+<script>
+    $('#submitAddCompany').unbind('click');
+    $('#submitAddCompany').click(function(){
+    	$('#addFormCompany').submit();
+    });
+    
+    $('#addFormCompany').unbind('submit');
+    $('#addFormCompany').submit(function(e)
+    {
+		e.preventDefault();
+		url = '/company/add';
+		$.post(
+			url,
+			$(this).serialize(),
+			function(data)
+			{
+				$('#addModal').modal('hide');
+				$('body').pgNotification({message: data, type: 'success'}).show();
+			}
+		);
+	});
+</script>
