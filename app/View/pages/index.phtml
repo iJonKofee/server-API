@@ -1,3 +1,20 @@
-layout
-<br>
-<?php echo $this->getContent()?>
+<!DOCTYPE html>
+<html>
+    <?php $this->partial('partials/head') ?>
+    <body class="fixed-header">
+        <?php $this->partial('partials/nav-menu') ?>
+        <div class="page-container">
+            <?php $this->partial('partials/header') ?>
+            <div class="page-content-wrapper">
+                <div class="content">
+                    <?php $this->partial('partials/breadcumb') ?>
+                    <div class="container-fluid container-fixed-lg">
+                    	<?php echo $this->getContent()?>
+                    </div>
+                </div>
+                <?php $this->partial('partials/footer') ?>
+            </div>
+        </div>
+        <?php $this->partial('partials/js') ?>
+    </body>
+</html>
