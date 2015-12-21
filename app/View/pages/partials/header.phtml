@@ -1,3 +1,7 @@
+<?php 
+$user = Core_UserCenter_Manager::getInstance()->getAccount();
+?>
+
 <div class="header">
     <div class="pull-left sm-table">
         <div class="header-inner">
@@ -11,10 +15,7 @@
 			<div class="visible-lg visible-md m-t-10">
 				<div class="pull-left p-r-10 p-t-10 fs-16 font-heading">
   					<span class="semi-bold">
-  						David
-  					</span>
-  					<span class="text-master">
-  						Nest
+  						<?= $user->login?>
   					</span>
 				</div>
 				<div class="dropdown pull-right">
