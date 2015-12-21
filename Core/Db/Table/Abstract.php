@@ -66,7 +66,7 @@ abstract class Core_Db_Table_Abstract extends \Phalcon\Mvc\Model
 	public function __call($method, $argument)
 	{
 	    //Если геттера или сеттера нет - вызываем родительский
-	    if (!method_exists($this, 'set' . $method) || !method_exists($this, 'get' . $method))
+	    if (!method_exists($this, 'set' . $method) && !method_exists($this, 'get' . $method))
 	    {
 	        parent::__call($method, $argument);
 	    }
