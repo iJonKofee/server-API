@@ -61,5 +61,27 @@ abstract class Core_Db_Table_Abstract extends \Phalcon\Mvc\Model
 	{
 		return $this->_tableName;
 	}
+	
+	public function __call($method, $argument)
+	{
+	    //Если геттера или сеттера нет - Исключение
+	    if (!method_exists($this, 'set' . $method) || !method_exists($this, 'get' . $method))
+	    {
+	        throw new Core_Exception("Method '$method()' does't exists in '" . get_called_class() . "'");
+	    }
+	    
+	    if (boolval($argument))
+	    {
+	        $newMethod = 'set' . $method;
+	        
+	        return $this->$newMethod($argument[0]);
+	    }
+	    else
+	    {
+	        $newMethod = 'get' . $method;
+	        
+	        return $this->$newMethod();
+	    }
+	}
 
 }
