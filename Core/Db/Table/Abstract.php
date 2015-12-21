@@ -2,6 +2,7 @@
 
 /**
  * Abstract table class
+ * @method id()
  */
 abstract class Core_Db_Table_Abstract extends \Phalcon\Mvc\Model
 {

@@ -13,3 +13,7 @@ app/Controllers/TestController.php
 app/Controllers/TestController.php
 
 app/View/test/index.phtml
+
+app/View/pages/test/getlist.phtml
+
+app/View/pages/test/index.phtml
