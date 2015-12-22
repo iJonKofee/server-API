@@ -42,7 +42,7 @@
 
     $('#submitAddCompany').unbind('click');
     $('#submitAddCompany').click(function(){
-    	$('#addFormCompany').submit();
+    	$('#addFormCompany button[type="submit"]').trigger('click');
     });
     
     $('#addFormCompany').unbind('submit');
