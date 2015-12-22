@@ -1,3 +1,4 @@
+<?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
 <form role="form" id="addFormCompany">
   <div class="row">
     <div class="col-sm-12">
@@ -17,17 +18,28 @@
   </div>
   <div class="row">
   	<div class="col-sm-12">
-		<select class="full-width" data-init-plugin="select2" name="category_id">
-			<?php foreach ($rowsCategory as $category) {?>
-				<option value="<?= $category->id()?>"><?= $category->name()?></option>
-			<?php }?>
-		</select>
+        <input type="hidden" id="mySelect2" class="full-width">
     </div>
   </div>
   <button class="hide" type="submit"></button>
 </form>
 
 <script>
+	function categorySelect()
+	{
+		var data = [];
+		<?php foreach ($rowsCategory as $category) {?>
+			data.push({id: <?= $category->id()?>, text: '<?= $category->name()?>'})
+		<?php }?>
+
+		return data;
+	}
+
+    $("#mySelect2").select2({
+        placeholder: "Category",
+        data: categorySelect()
+    });
+
     $('#submitAddCompany').unbind('click');
     $('#submitAddCompany').click(function(){
     	$('#addFormCompany').submit();
