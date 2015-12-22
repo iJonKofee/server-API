@@ -50,6 +50,50 @@ class CompanyController extends Core_Controller_Abstract
         echo json_encode($row->toArray());
     }
     
+    public function editAction()
+    {
+        $this->view->setRenderLevel(Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
+        
+        $id = $this->getParam('id');
+        
+        $row = $this->getTable()->findFirst($id);
+        
+        $tblCategoty = Category_Company_Table::getInstance();
+        
+        $rowsCategory = $tblCategoty->find();
+        
+        $this->view->rowsCategory = $rowsCategory;
+        
+        $this->view->row = $row;
+        
+        if (!$this->request->isPost())
+        {
+            return ;
+        }
+        
+        $this->view->disable();
+        
+        // Получение переменных методом POST
+        $name = $this->getPost('name');
+        $logo = $this->getPost('logo');
+        $categoryId = $this->getPost('category_id');
+        
+        $row
+            ->name($name)
+            ->logo($logo)
+            ->categoryId($categoryId)
+            ->save()
+        ;
+        
+        //Меняем id категории на название
+        if ($row->categoryId())
+        {
+            $row->categoryId($row->Category_Company_Table->name);
+        }
+        
+        echo json_encode($row->toArray());
+    }
+    
     public function deleteAction()
     {
         $this->view->disable();

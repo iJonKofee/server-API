@@ -1,0 +1,66 @@
+<?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
+<form role="form" id="editFormCompany">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Name</label>
+        <input name="name" type="text" class="form-control" value="<?= $row->name()?>" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Logo</label>
+        <input name="logo" type="text" class="form-control" required value="<?= $row->logo()?>">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+        <input type="hidden" id="mySelect2" class="full-width" name="category_id" value="<?= $row->categoryId()?>">
+    </div>
+  </div>
+  <button class="hide" type="submit"></button>
+</form>
+
+<script>
+	function categorySelect()
+	{
+		var data = [];
+		<?php foreach ($rowsCategory as $category) {?>
+			data.push({id: <?= $category->id()?>, text: '<?= $category->name()?>'})
+		<?php }?>
+
+		return data;
+	}
+
+    $("#mySelect2").select2({
+        placeholder: "Category",
+        data: categorySelect()
+    });
+
+    $('#submitEditCompany').unbind('click');
+    $('#submitEditCompany').click(function(){
+    	$('#editFormCompany button[type="submit"]').trigger('click');
+    });
+    
+    $('#editFormCompany').unbind('submit');
+    $('#editFormCompany').submit(function(e)
+    {
+		e.preventDefault();
+		url = '/company/edit?id=<?= $row->id()?>';
+		$.post(
+			url,
+			$(this).serialize(),
+			function(data)
+			{
+				var data = JSON.parse(data)
+				
+				table.editRow(data.id, data.name, data.category_id, data.logo, data.datetime_create);
+				$('#editModal').modal('hide');
+				location.reload()
+			}
+		);
+	});
+</script>
