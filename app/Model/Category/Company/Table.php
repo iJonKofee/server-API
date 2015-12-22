@@ -25,6 +25,15 @@ class Category_Company_Table extends Core_Db_Table_Abstract
     {
         return $this->name;
     }
+    /**
+     * @return string
+     */
+    protected function setName($name)
+    {
+        $this->name = $name;
+        
+        return $this;
+    }
     
     public function initialize()
     {
