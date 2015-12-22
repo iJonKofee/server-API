@@ -42,7 +42,10 @@ class CompanyController extends Core_Controller_Abstract
         }
         
         //Меняем id категории на название
-        $row->categoryId($row->Category_Company_Table->name);
+        if ($row->categoryId())
+        {
+            $row->categoryId($row->Category_Company_Table->name);
+        }
         
         echo json_encode($row->toArray());
     }

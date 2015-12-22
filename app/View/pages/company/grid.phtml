@@ -41,7 +41,8 @@
     				<p><?= $row->name()?></p>
     			</td>
     			<td class="v-align-middle">
-    				<a href="#" class="btn btn-tag"><?= $row->Category_Company_Table->name?></a>
+    				<?php $category = $row->categoryId() ? $row->Category_Company_Table->name : 'No category';?>
+    				<a href="#" class="btn btn-tag"><?= $category?></a>
     			</td>
     			<td class="v-align-middle">
     				<p><?= $row->logo()?></p>

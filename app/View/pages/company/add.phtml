@@ -56,7 +56,10 @@
 			function(data)
 			{
 				var data = JSON.parse(data)
-				table.addRow(data.id, data.name, data.category_id, data.logo, data.datetime_create);
+				
+				
+				
+				table.addRow(data.id, data.name, data.category_id || 'No category', data.logo, data.datetime_create);
 				$('#addModal').modal('hide');
 			}
 		);
