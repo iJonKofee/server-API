@@ -104,6 +104,17 @@ class Company_Table extends Core_Db_Table_Abstract
     public function initialize()
     {
         $this->belongsTo("category_id", "Category_Company_Table", "id");
+        $this->hasMany("id", "Place_Table", "company_id");
     }
-
+    
+    public function beforeDelete()
+    {
+        if ($this->Place_Table->toArray())
+        {
+            return FALSE;   
+        }
+        
+        return TRUE;
+    }
+    
 }
