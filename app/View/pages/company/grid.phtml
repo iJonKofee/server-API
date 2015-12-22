@@ -41,8 +41,9 @@
     				<p><?= $row->name()?></p>
     			</td>
     			<td class="v-align-middle">
-    				<?php $category = $row->categoryId() ? $row->Category_Company_Table->name : 'No category';?>
-    				<a href="#" class="btn btn-tag"><?= $category?></a>
+    				<?php if ($category = $row->categoryId()) {?>
+        				<a href="#" class="btn btn-tag"><?= $row->Category_Company_Table->name?></a>
+    				<?php }?>
     			</td>
     			<td class="v-align-middle">
     				<p><?= $row->logo()?></p>
@@ -85,10 +86,20 @@ tableElem.dataTable(settings);
 var table = {
 		addRow: function(id, name, category, logo, date)
 		{
+			var categotyText;
+			if (category == null) 
+			{
+				categotyText = ''
+			}
+			else
+			{
+				categotyText = '<a href="#" class="btn btn-tag">' + category + '</a>'
+			}
+			
 			tableElem.dataTable().fnAddData([
                  id,
                  name,
-                 '<a href="#" class="btn btn-tag">' + category + '</a>',
+                 categotyText,
                  logo,
                  date,
                  '<div class="btn-group"><button type="button" class="btn btn-complete" onClick="editRow(this)"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-danger" onClick="deleteRow(this)"><i class="fa fa-trash-o"></i></button></div>'

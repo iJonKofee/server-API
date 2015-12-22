@@ -18,7 +18,7 @@
   </div>
   <div class="row">
   	<div class="col-sm-12">
-        <input type="hidden" id="mySelect2" class="full-width">
+        <input type="hidden" id="mySelect2" class="full-width" name="category_id">
     </div>
   </div>
   <button class="hide" type="submit"></button>
@@ -57,9 +57,7 @@
 			{
 				var data = JSON.parse(data)
 				
-				
-				
-				table.addRow(data.id, data.name, data.category_id || 'No category', data.logo, data.datetime_create);
+				table.addRow(data.id, data.name, data.category_id, data.logo, data.datetime_create);
 				$('#addModal').modal('hide');
 			}
 		);
