@@ -1,0 +1,37 @@
+<?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
+<form role="form" id="addFormTag">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Name</label>
+        <input name="name" type="text" class="form-control" required>
+      </div>
+    </div>
+  </div>
+  <button class="hide" type="submit"></button>
+</form>
+
+<script>
+    $('#submitAddTag').unbind('click');
+    $('#submitAddTag').click(function(){
+    	$('#addFormTag button[type="submit"]').trigger('click');
+    });
+    
+    $('#addFormTag').unbind('submit');
+    $('#addFormTag').submit(function(e)
+    {
+		e.preventDefault();
+		url = '/tag/add';
+		$.post(
+			url,
+			$(this).serialize(),
+			function(data)
+			{
+				var data = JSON.parse(data)
+				
+				table.addRow(data.id, data.name);
+				$('#addModal').modal('hide');
+			}
+		);
+	});
+</script>
