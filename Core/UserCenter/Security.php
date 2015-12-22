@@ -30,12 +30,6 @@ class Core_UserCenter_Security extends Phalcon\Mvc\User\Plugin
 				'auth' =>
 					[
 						'login',
-						//Костыль, костылёк из-за "CoreException: For the role 'user' access denied to controller 'auth' in action 'logout'"
-						'logout'
-					],
-				'index' =>
-					[
-						'index'
 					]
 			];
 			
@@ -44,6 +38,14 @@ class Core_UserCenter_Security extends Phalcon\Mvc\User\Plugin
 			    [
 			        'bla',
 			        'getlist'
+			    ],
+			    'index' =>
+			    [
+			        'index'
+			    ],
+			    'auth' =>
+			    [
+			        'logout'
 			    ]
 			];
 			
