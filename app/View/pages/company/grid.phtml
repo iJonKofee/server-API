@@ -51,10 +51,10 @@
     			</td>
     			<td class="v-align-middle">
 					<div class="btn-group">
-						<button type="button" class="btn btn-complete" role="edit">
+						<button type="button" class="btn btn-complete" onClick="editRow()">
 							<i class="fa fa-pencil"></i>
 						</button>
-						<button type="button" class="btn btn-danger" role="delete">
+						<button type="button" class="btn btn-danger" onClick="deleteRow()">
 							<i class="fa fa-trash-o"></i>
 						</button>
 					</div>
@@ -90,7 +90,7 @@ var table = {
                  '<a href="#" class="btn btn-tag">' + category + '</a>',
                  logo,
                  date,
-                 '<div class="btn-group"><button type="button" class="btn btn-complete"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></div>'
+                 '<div class="btn-group"><button type="button" class="btn btn-complete" onClick="editRow()"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-danger" onClick="deleteRow()"><i class="fa fa-trash-o"></i></button></div>'
              ]);
 		},
 		deleteRow: function(id)
@@ -103,7 +103,13 @@ var table = {
 		}
 }
 
-$('table button[role="delete"]').click(function(){
+function editRow()
+{
+	alert('Еще всё в переди)))');
+}
+
+function deleteRow()
+{
 	var row 	= $(this).parents('tr');
 	var rowId 	= row.data('id');
 	var name 	= row.find('td[role="name"] p').text();
@@ -129,5 +135,5 @@ $('table button[role="delete"]').click(function(){
 			}
 		);
 	});
-});
+}
 </script>
