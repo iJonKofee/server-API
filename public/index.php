@@ -6,7 +6,7 @@ try
 {
 
     //Read the configuration
-    $config = new Phalcon\Config\Adapter\Ini('../app/config/config.ini');
+    $config = new Phalcon\Config\Adapter\Ini('../app/Config/config.ini');
     //Register an autoloader
     $loader = new Phalcon\Loader();
     $loader->registerDirs(
