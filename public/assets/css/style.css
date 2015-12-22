@@ -3,3 +3,6 @@
 * Override Pages default styles or create your own styles here
 
 */
+.login-wrapper .bg-pic > img {
+    opacity: 1 !important;
+}

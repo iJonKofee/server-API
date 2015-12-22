@@ -15,15 +15,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta content="" name="description" />
     <meta content="JonKofee" name="author" />
-    <?= Phalcon\Tag::stylesheetLink('css/pace-theme-flash.css');?>
-    <?= Phalcon\Tag::stylesheetLink('css/bootstrap.min.css');?>
-    <?= Phalcon\Tag::stylesheetLink('css/font-awesome.css');?>
-    <?= Phalcon\Tag::stylesheetLink('css/jquery.scrollbar.css');?>
-    <?= Phalcon\Tag::stylesheetLink('css/select2.css');?>
-    <?= Phalcon\Tag::stylesheetLink('css/switchery.min.css');?>
-    <?= Phalcon\Tag::stylesheetLink('css/pages-icons.css');?>
-    <?= Phalcon\Tag::stylesheetLink('css/pages.css');?>
-    <?= Phalcon\Tag::stylesheetLink('css/custom.css');?>
+    <?= Phalcon\Tag::stylesheetLink('assets/plugins/pace/pace-theme-flash.css');?>
+    <?= Phalcon\Tag::stylesheetLink('assets/plugins/boostrapv3/css/bootstrap.min.css');?>
+    <?= Phalcon\Tag::stylesheetLink('assets/plugins/font-awesome/css/font-awesome.css');?>
+    <?= Phalcon\Tag::stylesheetLink('assets/plugins/jquery-scrollbar/jquery.scrollbar.css');?>
+    <?= Phalcon\Tag::stylesheetLink('assets/plugins/bootstrap-select2/select2.css');?>
+    <?= Phalcon\Tag::stylesheetLink('assets/plugins/switchery/css/switchery.min.css');?>
+    <?= Phalcon\Tag::stylesheetLink('pages/css/pages-icons.css');?>
+    <?= Phalcon\Tag::stylesheetLink('pages/css/pages.css');?>
+    <?= Phalcon\Tag::stylesheetLink('assets/css/style.css');?>
     <!--[if lte IE 9]>
         <link href="pages/css/ie9.css" rel="stylesheet" type="text/css" />
     <![endif]-->
@@ -96,27 +96,28 @@
     </div>
     <!-- END PAGE CONTAINER -->
     <!-- BEGIN VENDOR JS -->
-    <?= Phalcon\Tag::javascriptInclude("js/pace.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/jquery-1.11.1.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/modernizr.custom.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/jquery-ui.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/bootstrap.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/jquery-easy.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/jquery.unveil.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/jquery.bez.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/jquery.ioslist.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/jquery.actual.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/jquery.scrollbar.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/select2.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/classie.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/switchery.min.js");?>
-    <?= Phalcon\Tag::javascriptInclude("js/jquery.validate.min.js");?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/pace/pace.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude("assets/plugins/jquery/jquery-1.11.1.min.js");?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/modernizr.custom.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-ui/jquery-ui.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/boostrapv3/js/bootstrap.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery/jquery-easy.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-unveil/jquery.unveil.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-unveil/jquery.unveil.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-bez/jquery.bez.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-ios-list/jquery.ioslist.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-actual/jquery.actual.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-scrollbar/jquery.scrollbar.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/bootstrap-select2/select2.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude('assets/plugins/classie/classie.js');?>
+	<?= Phalcon\Tag::javascriptInclude('assets/plugins/switchery/js/switchery.min.js');?>
+    <?= Phalcon\Tag::javascriptInclude("assets/plugins/jquery-validation/js/jquery.validate.min.js");?>
     <!-- END VENDOR JS -->
     <!-- BEGIN CORE TEMPLATE JS -->
-    <?= Phalcon\Tag::javascriptInclude("js/pages.min.js");?>
+    <?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
     <!-- END CORE TEMPLATE JS -->
     <!-- BEGIN PAGE LEVEL JS -->
-    <?= Phalcon\Tag::javascriptInclude("js/scripts.js");?>
+	<?= Phalcon\Tag::javascriptInclude('assets/js/scripts.js');?>
     <!-- END PAGE LEVEL JS -->
     <script>
     $(function()
