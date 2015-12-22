@@ -1,0 +1,38 @@
+<?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
+<form role="form" id="editFormCity">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Name</label>
+        <input name="name" type="text" class="form-control" value="<?= $row->name()?>" required>
+      </div>
+    </div>
+  </div>
+  <button class="hide" type="submit"></button>
+</form>
+
+<script>
+    $('#submitEditCity').unbind('click');
+    $('#submitEditCity').click(function(){
+    	$('#editFormCity button[type="submit"]').trigger('click');
+    });
+    
+    $('#editFormCity').unbind('submit');
+    $('#editFormCity').submit(function(e)
+    {
+		e.preventDefault();
+		url = '/city/edit?id=<?= $row->id()?>';
+		$.post(
+			url,
+			$(this).serialize(),
+			function(data)
+			{
+				var data = JSON.parse(data)
+				
+				table.editRow(data.id, data.name);
+				$('#editModal').modal('hide');
+				location.reload()
+			}
+		);
+	});
+</script>
