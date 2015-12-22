@@ -121,7 +121,7 @@ $('table button[role="delete"]').click(function(){
 	function()
 	{
 		$.get(
-			'/company/delete/id/' + rowId,
+			'/company/delete?id=' + rowId,
 			function()
 			{
         		swal("Deleted!", 'Company "' + name +'" has been deleted.', "success");
