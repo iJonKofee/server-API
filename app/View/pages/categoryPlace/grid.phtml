@@ -1,0 +1,153 @@
+<link type="text/css" rel="stylesheet" href="/assets/plugins/jquery-datatable/media/css/jquery.dataTables.css">
+<link type="text/css" rel="stylesheet" href="/assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css">
+<link type="text/css" rel="stylesheet" href="/pages/css/pages.css">
+<link media="screen" type="text/css" rel="stylesheet" href="/assets/plugins/datatables-responsive/css/datatables.responsive.css">
+
+<script type="text/javascript" src="/assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+<script src="/assets/plugins/datatables-responsive/js/datatables.responsive.js" type="text/javascript"></script>
+<script src="/assets/plugins/datatables-responsive/js/lodash.min.js" type="text/javascript"></script>
+
+<table id="tableWithDynamicRows" class="table table-hover demo-table-dynamic dataTable no-footer" role="grid" aria-describedby="tableWithDynamicRows_info">
+	<thead>
+		<tr role="row">
+			<th class="sorting_asc" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1" style="width: 1%;" aria-sort="ascending">
+				ID
+			</th>
+			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1">
+				Name
+			</th>
+			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1" style="width: 2%;">
+				Actions
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($rows as $row) {?>
+    		<tr role="row" class="odd" data-id="<?= $row->id()?>">
+    			<td class="v-align-middle sorting_1">
+    				<p><?= $row->id()?></p>
+    			</td>
+    			<td class="v-align-middle" role="name">
+    				<p><?= $row->name()?></p>
+    			</td>
+    			<td class="v-align-middle">
+					<div class="btn-group">
+						<button type="button" class="btn btn-complete" onClick="editRow(this)">
+							<i class="fa fa-pencil"></i>
+						</button>
+						<button type="button" class="btn btn-danger" onClick="deleteRow(this)">
+							<i class="fa fa-trash-o"></i>
+						</button>
+					</div>
+    			</td>
+    		</tr>
+		<?php }?>
+	</tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Edit category company</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button id="submitEditCategoryCompany" type="button" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Apply the plugin -->
+<script>
+var tableElem = $('#tableWithDynamicRows');
+
+var settings = {
+    "sDom": "<'table-responsive't><'row'<p i>>",
+    "destroy": true,
+    "scrollCollapse": true,
+    "oLanguage": {
+        "sLengthMenu": "_MENU_ ",
+        "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+    },
+    "iDisplayLength": 5
+};
+
+tableElem.dataTable(settings);
+
+var table = {
+		addRow: function(id, name)
+		{
+			tableElem.dataTable().fnAddData([
+                 id,
+                 name,
+                 '<div class="btn-group"><button type="button" class="btn btn-complete" onClick="editRow(this)"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-danger" onClick="deleteRow(this)"><i class="fa fa-trash-o"></i></button></div>'
+             ]);
+		},
+		deleteRow: function(id)
+		{
+			tableElem
+			.DataTable()
+			.rows('[data-id="' + id + '"]')
+		    .remove()
+		    .draw();
+		},
+		editRow: function(id, name)
+		{
+			tableElem.DataTable().rows('[data-id="' + id + '"]').data([
+				'<p>' + id + '</p>',
+				'<p>' + name + '</p>',
+				'<div class="btn-group"><button type="button" class="btn btn-complete" onClick="editRow(this)"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-danger" onClick="deleteRow(this)"><i class="fa fa-trash-o"></i></button></div>'
+			]);
+		}
+}
+
+function editRow(elem)
+{
+	var row 	= $(elem).parents('tr');
+	var rowId 	= row.data('id');
+
+	$.get(
+			'/categoryPlace/edit?id=' + rowId,
+			function(data)
+			{
+				$('#editModal .modal-body').html(data);
+				$('#editModal').modal('show');
+			}
+		);
+}
+
+function deleteRow(elem)
+{
+	var row 	= $(elem).parents('tr');
+	var rowId 	= row.data('id');
+	var name 	= row.find('td[role="name"] p').text();
+
+	swal(
+	{
+		title: "Are you sure?",   
+		text: 'You will not be able to recover this category "' + name  + '"!',   
+		type: "warning",   
+		showCancelButton: true,   
+		confirmButtonColor: "#f55753",   
+		confirmButtonText: "Yes, delete it!",   
+		closeOnConfirm: false 
+	}, 
+	function()
+	{
+		$.get(
+			'/categoryPlace/delete?id=' + rowId,
+			function()
+			{
+        		swal("Deleted!", 'Category "' + name +'" has been deleted.', "success");
+        		table.deleteRow(rowId);
+			}
+		);
+	});
+}
+</script>
