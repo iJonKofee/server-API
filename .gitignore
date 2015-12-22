@@ -17,3 +17,7 @@ app/View/test/index.phtml
 app/View/pages/test/getlist.phtml
 
 app/View/pages/test/index.phtml
+
+app/View/pages/test/index.phtml
+
+app/Controllers/TestController.php

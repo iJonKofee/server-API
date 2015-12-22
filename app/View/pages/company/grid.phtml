@@ -1,0 +1,133 @@
+<link type="text/css" rel="stylesheet" href="/assets/plugins/jquery-datatable/media/css/jquery.dataTables.css">
+<link type="text/css" rel="stylesheet" href="/assets/plugins/jquery-datatable/extensions/FixedColumns/css/dataTables.fixedColumns.min.css">
+<link type="text/css" rel="stylesheet" href="/pages/css/pages.css">
+<link media="screen" type="text/css" rel="stylesheet" href="/assets/plugins/datatables-responsive/css/datatables.responsive.css">
+
+<script type="text/javascript" src="/assets/plugins/jquery-datatable/media/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/assets/plugins/jquery-datatable/extensions/TableTools/js/dataTables.tableTools.min.js"></script>
+<script src="/assets/plugins/datatables-responsive/js/datatables.responsive.js" type="text/javascript"></script>
+<script src="/assets/plugins/datatables-responsive/js/lodash.min.js" type="text/javascript"></script>
+
+<table id="tableWithDynamicRows" class="table table-hover demo-table-dynamic dataTable no-footer" role="grid" aria-describedby="tableWithDynamicRows_info">
+	<thead>
+		<tr role="row">
+			<th class="sorting_asc" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1" style="width: 20px;" aria-sort="ascending">
+				ID
+			</th>
+			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1" style="width: 416px;">
+				Name
+			</th>
+			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1" style="width: 266px;">
+				Category
+			</th>
+			<th tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1" style="width: 341px;">
+				Logo
+			</th>
+			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1" style="width: 266px;">
+				Date cteated
+			</th>
+			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1" style="width: 266px;">
+				Actions
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php foreach ($rows as $row) {?>
+    		<tr role="row" class="odd" data-id="<?= $row->id()?>">
+    			<td class="v-align-middle sorting_1">
+    				<p><?= $row->id()?></p>
+    			</td>
+    			<td class="v-align-middle" role="name">
+    				<p><?= $row->name()?></p>
+    			</td>
+    			<td class="v-align-middle">
+    				<a href="#" class="btn btn-tag"><?= $row->Category_Company_Table->name?></a>
+    			</td>
+    			<td class="v-align-middle">
+    				<p><?= $row->logo()?></p>
+    			</td>
+    			<td class="v-align-middle">
+    				<p><?= $row->getDatetimeCreate()?></p>
+    			</td>
+    			<td class="v-align-middle">
+					<div class="btn-group">
+						<button type="button" class="btn btn-complete" role="edit">
+							<i class="fa fa-pencil"></i>
+						</button>
+						<button type="button" class="btn btn-danger" role="delete">
+							<i class="fa fa-trash-o"></i>
+						</button>
+					</div>
+    			</td>
+    		</tr>
+		<?php }?>
+	</tbody>
+</table>
+
+<!-- Apply the plugin -->
+<script>
+var tableElem = $('#tableWithDynamicRows');
+
+var settings = {
+    "sDom": "<'table-responsive't><'row'<p i>>",
+    "destroy": true,
+    "scrollCollapse": true,
+    "oLanguage": {
+        "sLengthMenu": "_MENU_ ",
+        "sInfo": "Showing <b>_START_ to _END_</b> of _TOTAL_ entries"
+    },
+    "iDisplayLength": 5
+};
+
+tableElem.dataTable(settings);
+
+var table = {
+		addRow: function(id, name, category, logo, date)
+		{
+			tableElem.dataTable().fnAddData([
+                 id,
+                 name,
+                 '<a href="#" class="btn btn-tag">' + category + '</a>',
+                 logo,
+                 date,
+                 '<div class="btn-group"><button type="button" class="btn btn-complete"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></div>'
+             ]);
+		},
+		deleteRow: function(id)
+		{
+			tableElem
+			.DataTable()
+			.rows('[data-id="' + id + '"]')
+		    .remove()
+		    .draw();
+		}
+}
+
+$('table button[role="delete"]').click(function(){
+	var row 	= $(this).parents('tr');
+	var rowId 	= row.data('id');
+	var name 	= row.find('td[role="name"] p').text();
+
+	swal(
+	{
+		title: "Are you sure?",   
+		text: 'You will not be able to recover this company "' + name  + '"!',   
+		type: "warning",   
+		showCancelButton: true,   
+		confirmButtonColor: "#f55753",   
+		confirmButtonText: "Yes, delete it!",   
+		closeOnConfirm: false 
+	}, 
+	function()
+	{
+		$.get(
+			'/company/delete/id/' + rowId,
+			function()
+			{
+        		swal("Deleted!", 'Company "' + name +'" has been deleted.', "success");
+        		table.deleteRow(rowId);
+			}
+		);
+	});
+});
+</script>
