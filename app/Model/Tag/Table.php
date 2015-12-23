@@ -59,4 +59,14 @@ class Tag_Table extends Core_Db_Table_Abstract
             );
     }
     
+    public function beforeDelete()
+    {
+        if ($this->Place_Tag_Table->toArray())
+        {
+            return FALSE;
+        }
+    
+        return TRUE;
+    }
+    
 }

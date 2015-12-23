@@ -39,5 +39,15 @@ class Category_Place_Table extends Core_Db_Table_Abstract
     {
         $this->hasMany("id", "Place_Table", "category_id");
     }
+
+    public function beforeDelete()
+    {
+        if ($this->Place_Table->toArray())
+        {
+            return FALSE;
+        }
+    
+        return TRUE;
+    }
     
 }

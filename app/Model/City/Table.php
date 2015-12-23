@@ -37,4 +37,19 @@ class City_Table extends Core_Db_Table_Abstract
         return $this;
     }
     
+    public function initialize()
+    {
+        $this->hasMany("id", "Place_Table", "city_id");
+    }
+    
+    public function beforeDelete()
+    {
+        if ($this->Place_Table->toArray())
+        {
+            return FALSE;
+        }
+    
+        return TRUE;
+    }
+    
 }

@@ -39,5 +39,15 @@ class Category_Company_Table extends Core_Db_Table_Abstract
     {
         $this->hasMany("id", "Company_Table", "category_id");
     }
+
+    public function beforeDelete()
+    {
+        if ($this->Company_Table->toArray())
+        {
+            return FALSE;
+        }
+    
+        return TRUE;
+    }
     
 }
