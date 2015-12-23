@@ -1,0 +1,157 @@
+<?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
+
+<form role="form" id="addFormPlace">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Name</label>
+        <input name="name" type="text" class="form-control" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+  		<div class="form-group">
+        	<input type="hidden" id="company" class="full-width" name="company_id">
+        </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+  		<div class="form-group">
+        	<input type="hidden" id="category" class="full-width" name="category_id">
+        </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Logo</label>
+        <input name="logo" type="text" class="form-control" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+  		<div class="form-group">
+        	<input type="hidden" id="city" class="full-width" name="city_id">
+        </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Address</label>
+        <input name="address" type="text" class="form-control" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Geo point</label>
+        <input name="geo_point" type="text" class="form-control" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+      <div class="form-group form-group-default required">
+        <label>Phone</label>
+        <input name="phone" type="text" class="form-control" required>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+        <input type="hidden" id="tags" class="full-width" name="tags">
+    </div>
+  </div>
+  <button class="hide" type="submit"></button>
+</form>
+
+<script>
+function companySelect()
+{
+	var data = [];
+	<?php foreach ($rowsCompany as $company) {?>
+		data.push({id: <?= $company->id()?>, text: '<?= $company->name()?>'})
+	<?php }?>
+
+	return data
+}
+
+function categorySelect()
+{
+	var data = [];
+	<?php foreach ($rowsCategory as $category) {?>
+		data.push({id: <?= $category->id()?>, text: '<?= $category->name()?>'})
+	<?php }?>
+
+	return data;
+}
+
+function citySelect()
+{
+	var data = [];
+	<?php foreach ($rowsCity as $city) {?>
+		data.push({id: <?= $city->id()?>, text: '<?= $city->name()?>'})
+	<?php }?>
+
+	return data;
+}
+
+function tagsInput()
+{
+	var data = [];
+	<?php foreach ($rowsTag as $tag) {?>
+		data.push({id: <?= $tag->id()?>, text: '<?= $tag->name()?>'})
+	<?php }?>
+
+	return data;
+}
+
+    $("#company").select2({
+        placeholder: "Company",
+        data: companySelect()
+    });
+    
+    $("#category").select2({
+        placeholder: "Category",
+        data: categorySelect()
+    });
+    
+    $("#city").select2({
+        placeholder: "City",
+        data: citySelect()
+    });
+    
+    $("#tags").select2({
+        placeholder: "Tags",
+        multiple: true,
+        data: tagsInput()
+    });
+
+    $('#submitAddPlace').unbind('click');
+    $('#submitAddPlace').click(function(){
+    	$('#addFormPlace button[type="submit"]').trigger('click');
+    });
+    
+    $('#addFormPlace').unbind('submit');
+    $('#addFormPlace').submit(function(e)
+    {
+		e.preventDefault();
+		url = '/place/add';
+		$.post(
+			url,
+			$(this).serialize(),
+			function(data)
+			{
+				var data = JSON.parse(data)
+				
+				$('#addModal').modal('hide');
+				location.reload();
+			}
+		);
+	});
+</script>
