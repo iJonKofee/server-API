@@ -142,59 +142,6 @@ var settings = {
 
 tableElem.dataTable(settings);
 
-var table = {
-		addRow: function(id, name, category, logo, date)
-		{
-			var categotyText;
-			if (category == null) 
-			{
-				categotyText = ''
-			}
-			else
-			{
-				categotyText = '<a href="#" class="btn btn-tag">' + category + '</a>'
-			}
-			
-			tableElem.dataTable().fnAddData([
-                 id,
-                 name,
-                 categotyText,
-                 logo,
-                 date,
-                 '<div class="btn-group"><button type="button" class="btn btn-xs btn-xs btn-complete" onClick="editRow(this)"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-xs btn-xs btn-danger" onClick="deleteRow(this)"><i class="fa fa-trash-o"></i></button></div>'
-             ]);
-		},
-		deleteRow: function(id)
-		{
-			tableElem
-			.DataTable()
-			.rows('[data-id="' + id + '"]')
-		    .remove()
-		    .draw();
-		},
-		editRow: function(id, name, category, logo, date)
-		{
-			var categotyText;
-			if (category == null) 
-			{
-				categotyText = ''
-			}
-			else
-			{
-				categotyText = '<a href="#" class="btn btn-tag">' + category + '</a>'
-			}
-			
-			tableElem.DataTable().rows('[data-id="' + id + '"]').data([
-				'<p>' + id + '</p>',
-				'<p>' + name + '</p>',
-				categotyText,
-				'<p>' + logo + '</p>',
-				'<p>' + date + '</p>',
-				'<div class="btn-group"><button type="button" class="btn btn-xs btn-complete" onClick="editRow(this)"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-xs btn-danger" onClick="deleteRow(this)"><i class="fa fa-trash-o"></i></button></div>'
-			]);
-		}
-}
-
 function editRow(elem)
 {
 	var row 	= $(elem).parents('tr');
@@ -233,7 +180,7 @@ function deleteRow(elem)
 			function()
 			{
         		swal("Deleted!", 'Place "' + name +'" has been deleted.', "success");
-        		table.deleteRow(rowId);
+        		location.reload();
 			}
 		);
 	});

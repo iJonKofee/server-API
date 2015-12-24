@@ -18,10 +18,12 @@
             			</div>
             		</div>
             	</div>
-            	<?php $logo = $row->Media_Table ? $row->Media_Table->path() : 'https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg'?>
+            	<?php $rowMedia = $row->Media_Table;?>
+            	<?php $logo = $rowMedia ? $rowMedia->path() : 'https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg'?>
+            	<?php $logoVal = $rowMedia ? $rowMedia->id() : '0'?>
             	<img id="place-logo" src="<?= $logo?>" data-default-src="https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg" style="width: auto; height: 160px;">
                 <input id="logoUpload" name="media" type="file" class="hide" data-url="/media/upload">
-                <input id="logo" name="logo" type="text">
+                <input id="logo" name="logo" type="text" value="<?= $logoVal?>">
             </div>
 		</div>
 		<div class="col col-sm-8">
@@ -159,7 +161,6 @@ function tagsInput()
 			$(this).serialize(),
 			function(data)
 			{
-				$('#editModal').modal('hide');
 				location.reload();
 			}
 		);

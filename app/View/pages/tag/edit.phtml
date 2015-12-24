@@ -27,11 +27,7 @@
 			$(this).serialize(),
 			function(data)
 			{
-				var data = JSON.parse(data)
-				
-				table.editRow(data.id, data.name);
-				$('#editModal').modal('hide');
-				location.reload()
+				location.reload();
 			}
 		);
 	});

@@ -27,10 +27,7 @@
 			$(this).serialize(),
 			function(data)
 			{
-				var data = JSON.parse(data)
-				
-				table.addRow(data.id, data.name, data.category_id, data.logo, data.datetime_create);
-				$('#addModal').modal('hide');
+				location.reload();
 			}
 		);
 	});

@@ -80,33 +80,6 @@ var settings = {
 
 tableElem.dataTable(settings);
 
-var table = {
-		addRow: function(id, name)
-		{
-			tableElem.dataTable().fnAddData([
-                 id,
-                 name,
-                 '<div class="btn-group"><button type="button" class="btn btn-xs btn-complete" onClick="editRow(this)"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-xs btn-danger" onClick="deleteRow(this)"><i class="fa fa-trash-o"></i></button></div>'
-             ]);
-		},
-		deleteRow: function(id)
-		{
-			tableElem
-			.DataTable()
-			.rows('[data-id="' + id + '"]')
-		    .remove()
-		    .draw();
-		},
-		editRow: function(id, name)
-		{
-			tableElem.DataTable().rows('[data-id="' + id + '"]').data([
-				'<p>' + id + '</p>',
-				'<p>' + name + '</p>',
-				'<div class="btn-group"><button type="button" class="btn btn-xs btn-complete" onClick="editRow(this)"><i class="fa fa-pencil"></i></button><button type="button" class="btn btn-xs btn-danger" onClick="deleteRow(this)"><i class="fa fa-trash-o"></i></button></div>'
-			]);
-		}
-}
-
 function editRow(elem)
 {
 	var row 	= $(elem).parents('tr');
@@ -145,7 +118,7 @@ function deleteRow(elem)
 			function()
 			{
         		swal("Deleted!", 'Category "' + name +'" has been deleted.', "success");
-        		table.deleteRow(rowId);
+        		location.reload();
 			}
 		);
 	});
