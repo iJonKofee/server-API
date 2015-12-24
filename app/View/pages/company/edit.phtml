@@ -1,26 +1,48 @@
 <?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.iframe-transport.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.fileupload.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.ui.widget.js');?>
 <form role="form" id="editFormCompany">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="form-group form-group-default required">
-        <label>Name</label>
-        <input name="name" type="text" class="form-control" value="<?= $row->name()?>" required>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-  	<div class="col-sm-12">
-      <div class="form-group form-group-default required">
-        <label>Logo</label>
-        <input name="logo" type="text" class="form-control" required value="<?= $row->logo()?>">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-  	<div class="col-sm-12">
-        <input type="hidden" id="mySelect2" class="full-width" name="category_id" value="<?= $row->categoryId()?>">
-    </div>
-  </div>
+	<div class="row">
+		<div class="col col-sm-4">
+            <div class="logo_jk">
+            	<div data-logo_jk="upload" class="logo_jk_upload-wrap">
+            		<div class="logo_jk__upload-outer">
+            			<div class="vc-m">
+            				<div class="vc-i">
+            					<span class="logo_jk__upload-text">
+            						<span class="logo_jk__upload-icon">Change image</span>
+            					</span>
+            				</div>
+            			</div>
+            		</div>
+            	</div>
+            	<?php $logo = $row->Media_Table ? $row->Media_Table->path() : 'https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg'?>
+            	<img id="company-logo" src="<?= $logo?>" data-default-src="https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg" style="width: auto; height: 160px;">
+                <input id="logoUpload" name="media" type="file" class="hide" data-url="/media/upload">
+                <input id="logo" name="logo" type="text">
+            </div>
+		</div>
+		<div class="col col-sm-8">
+          <div class="row">
+              <div class="form-group form-group-default required">
+                <label>Name</label>
+                <input name="name" type="text" class="form-control" value="<?= $row->name()?>" required>
+              </div>
+          </div>
+          <div class="row">
+              <div class="form-group form-group-default required">
+                <label>Address</label>
+                <input name="address" type="text" class="form-control" required>
+              </div>
+          </div>
+          <div class="row">
+          		<div class="form-group">
+                	<input type="hidden" id="category" class="full-width" name="category_id" value="<?= $row->categoryId()?>">
+                </div>
+          </div>
+		</div>
+	</div>
   <button class="hide" type="submit"></button>
 </form>
 
@@ -35,7 +57,7 @@
 		return data;
 	}
 
-    $("#mySelect2").select2({
+    $("#category").select2({
         placeholder: "Category",
         data: categorySelect()
     });
@@ -62,5 +84,19 @@
 				location.reload()
 			}
 		);
+	});
+
+    $('#logoUpload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+        	var objImage = data.result;
+
+        	$('#company-logo').attr('src', objImage.path);
+        	$('#logo').val(objImage.id);
+        }
+    });
+	
+	$('[data-logo_jk="upload"]').click(function(){
+		$('#logoUpload').trigger('click');
 	});
 </script>
