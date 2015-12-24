@@ -251,6 +251,7 @@ class Place_Table extends Core_Db_Table_Abstract
         $this->belongsTo("category_id", "Category_Place_Table", "id");
         $this->belongsTo("company_id", "Company_Table", "id");
         $this->belongsTo("city_id", "City_Table", "id");
+        $this->belongsTo("logo", "Media_Table", "id");
     }
     
     public function afterDelete()
