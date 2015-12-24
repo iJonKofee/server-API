@@ -27,7 +27,7 @@ class MediaController extends Core_Controller_Abstract
 	    }
 	    
 	    
-    	if (!move_uploaded_file($_FILES['logo']['tmp_name'], $pathFull))
+    	if (!move_uploaded_file($tmpName, $pathFull))
     	{
     	    return;
         }

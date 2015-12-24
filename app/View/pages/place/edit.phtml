@@ -1,21 +1,49 @@
 <?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.iframe-transport.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.fileupload.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.ui.widget.js');?>
 
 <form role="form" id="editFormPlace">
-  <div class="row">
-    <div class="col-sm-12">
-      <div class="form-group form-group-default required">
-        <label>Name</label>
-        <input name="name" type="text" class="form-control" required value="<?= $row->name()?>">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-  	<div class="col-sm-12">
-  		<div class="form-group">
-        	<input type="hidden" id="company" class="full-width" name="company_id" value="<?= $row->companyId()?>">
-        </div>
-    </div>
-  </div>
+	<div class="row">
+		<div class="col col-sm-4">
+            <div class="logo_jk">
+            	<div data-logo_jk="upload" class="logo_jk_upload-wrap">
+            		<div class="logo_jk__upload-outer">
+            			<div class="vc-m">
+            				<div class="vc-i">
+            					<span class="logo_jk__upload-text">
+            						<span class="logo_jk__upload-icon">Change image</span>
+            					</span>
+            				</div>
+            			</div>
+            		</div>
+            	</div>
+            	<?php $logo = $row->Media_Table ? $row->Media_Table->path() : 'https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg'?>
+            	<img id="place-logo" src="<?= $logo?>" data-default-src="https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg" style="width: auto; height: 160px;">
+                <input id="logoUpload" name="media" type="file" class="hide" data-url="/media/upload">
+                <input id="logo" name="logo" type="text">
+            </div>
+		</div>
+		<div class="col col-sm-8">
+          <div class="row">
+              <div class="form-group form-group-default required">
+                <label>Name</label>
+                <input name="name" type="text" class="form-control" required value="<?= $row->name()?>">
+              </div>
+          </div>
+          <div class="row">
+              <div class="form-group form-group-default required">
+                <label>Address</label>
+                <input name="address" type="text" class="form-control" required value="<?= $row->address()?>">
+              </div>
+          </div>
+          <div class="row">
+          		<div class="form-group">
+                	<input type="hidden" id="company" class="full-width" name="company_id" value="<?= $row->companyId()?>">
+                </div>
+          </div>
+		</div>
+	</div>
   <div class="row">
   	<div class="col-sm-12">
   		<div class="form-group">
@@ -25,25 +53,9 @@
   </div>
   <div class="row">
   	<div class="col-sm-12">
-      <div class="form-group form-group-default required">
-        <label>Logo</label>
-        <input name="logo" type="text" class="form-control" required value="<?= $row->logo()?>">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-  	<div class="col-sm-12">
   		<div class="form-group">
         	<input type="hidden" id="city" class="full-width" name="city_id" value="<?= $row->cityId()?>">
         </div>
-    </div>
-  </div>
-  <div class="row">
-  	<div class="col-sm-12">
-      <div class="form-group form-group-default required">
-        <label>Address</label>
-        <input name="address" type="text" class="form-control" required value="<?= $row->address()?>">
-      </div>
     </div>
   </div>
   <div class="row">
@@ -151,5 +163,19 @@ function tagsInput()
 				location.reload();
 			}
 		);
+	});
+
+    $('#logoUpload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+        	var objImage = data.result;
+
+        	$('#place-logo').attr('src', objImage.path);
+        	$('#logo').val(objImage.id);
+        }
+    });
+	
+	$('[data-logo_jk="upload"]').click(function(){
+		$('#logoUpload').trigger('click');
 	});
 </script>
