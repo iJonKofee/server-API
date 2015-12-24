@@ -65,7 +65,10 @@
     				<a href="#" class="btn btn-tag"><?= $row->Category_Place_Table->name?></a>
     			</td>
     			<td class="v-align-middle">
-    				<p><?= $row->logo()?></p>
+    				<?php $rowLogo = $row->Media_Table;
+    				if ($rowLogo){?>
+        				<img src="<?= $row->Media_Table->path()?>" style="width: auto; height: 100px;">
+					<?php }?>
     			</td>
     			<td class="v-align-middle">
     				<p><?= $row->City_Table->name?></p>
