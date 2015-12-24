@@ -105,6 +105,7 @@ class Company_Table extends Core_Db_Table_Abstract
     {
         $this->belongsTo("category_id", "Category_Company_Table", "id");
         $this->hasMany("id", "Place_Table", "company_id");
+        $this->belongsTo("logo", "Media_Table", "id");
     }
     
     public function beforeDelete()

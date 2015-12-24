@@ -46,7 +46,10 @@
     				<?php }?>
     			</td>
     			<td class="v-align-middle">
-    				<p><?= $row->logo()?></p>
+    				<?php $rowLogo = $row->Media_Table;
+    				if ($rowLogo){?>
+        				<img src="<?= $row->Media_Table->path()?>" style="width: auto; height: 100px;">
+					<?php }?>
     			</td>
     			<td class="v-align-middle">
     				<p><?= $row->getDatetimeCreate()?></p>
