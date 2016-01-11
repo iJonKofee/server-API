@@ -1,0 +1,71 @@
+<?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.iframe-transport.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.fileupload.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.ui.widget.js');?>
+<form role="form" id="addFormCategoryDish">
+  <div class="row">
+		<div class="col col-sm-4">
+            <div class="logo_jk">
+            	<div data-logo_jk="upload" class="logo_jk_upload-wrap">
+            		<div class="logo_jk__upload-outer">
+            			<div class="vc-m">
+            				<div class="vc-i">
+            					<span class="logo_jk__upload-text">
+            						<span class="logo_jk__upload-icon">Change image</span>
+            					</span>
+            				</div>
+            			</div>
+            		</div>
+            	</div>
+            	<img id="category-dish-image" src="https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg" data-default-src="https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg" style="width: auto; height: 160px;">
+                <input id="logoUpload" name="media" type="file" class="hide" data-url="/media/upload">
+                <input id="image" name="image_id" type="text">
+            </div>
+		</div>
+		<div class="col col-sm-8">
+          <div class="row">
+              <div class="form-group form-group-default required">
+                <label>Name</label>
+                <input name="name" type="text" class="form-control" required>
+              </div>
+          </div>
+		</div>
+	</div>
+  <button class="hide" type="submit"></button>
+</form>
+
+<script>
+    $('#submitAddCategoryDish').unbind('click');
+    $('#submitAddCategoryDish').click(function(){
+    	$('#addFormCategoryDish button[type="submit"]').trigger('click');
+    });
+    
+    $('#addFormCategoryDish').unbind('submit');
+    $('#addFormCategoryDish').submit(function(e)
+    {
+		e.preventDefault();
+		url = '/categoryDish/add';
+		$.post(
+			url,
+			$(this).serialize(),
+			function(data)
+			{
+				location.reload();
+			}
+		);
+	});
+
+    $('#logoUpload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+        	var objImage = data.result;
+
+        	$('#category-dish-image').attr('src', objImage.path);
+        	$('#image').val(objImage.id);
+        }
+    });
+	
+	$('[data-logo_jk="upload"]').click(function(){
+		$('#logoUpload').trigger('click');
+	});
+</script>

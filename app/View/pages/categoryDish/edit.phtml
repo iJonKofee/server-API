@@ -1,0 +1,74 @@
+<?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.iframe-transport.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.fileupload.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.ui.widget.js');?>
+<form role="form" id="editFormCategoryDish">
+  <div class="row">
+		<div class="col col-sm-4">
+            <div class="logo_jk">
+            	<div data-logo_jk="upload" class="logo_jk_upload-wrap">
+            		<div class="logo_jk__upload-outer">
+            			<div class="vc-m">
+            				<div class="vc-i">
+            					<span class="logo_jk__upload-text">
+            						<span class="logo_jk__upload-icon">Change image</span>
+            					</span>
+            				</div>
+            			</div>
+            		</div>
+            	</div>
+            	<?php $rowMedia = $row->Media_Table;?>
+            	<?php $logo = $rowMedia ? $rowMedia->path() : 'https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg'?>
+            	<?php $logoVal = $rowMedia ? $rowMedia->id() : '0'?>
+            	<img id="category-dish-image" src="<?= $logo?>" data-default-src="https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg" style="width: auto; height: 160px;">
+                <input id="imageUpload" name="media" type="file" class="hide" data-url="/media/upload">
+                <input id="image" name="image_id" type="text" value="<?= $logoVal?>">
+            </div>
+		</div>
+		<div class="col col-sm-8">
+          <div class="row">
+              <div class="form-group form-group-default required">
+                <label>Name</label>
+                <input name="name" type="text" class="form-control" required value="<?= $row->name()?>">
+              </div>
+          </div>
+		</div>
+	</div>
+  <button class="hide" type="submit"></button>
+</form>
+
+<script>
+    $('#submitEditCategoryDish').unbind('click');
+    $('#submitEditCategoryDish').click(function(){
+    	$('#editFormCategoryDish button[type="submit"]').trigger('click');
+    });
+    
+    $('#editFormCategoryDish').unbind('submit');
+    $('#editFormCategoryDish').submit(function(e)
+    {
+		e.preventDefault();
+		url = '/categoryDish/edit?id=<?= $row->id();?>';
+		$.post(
+			url,
+			$(this).serialize(),
+			function(data)
+			{
+				location.reload();
+			}
+		);
+	});
+
+    $('#imageUpload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+        	var objImage = data.result;
+
+        	$('#category-dish-image').attr('src', objImage.path);
+        	$('#image').val(objImage.id);
+        }
+    });
+	
+	$('[data-logo_jk="upload"]').click(function(){
+		$('#imageUpload').trigger('click');
+	});
+</script>
