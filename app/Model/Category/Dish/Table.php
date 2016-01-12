@@ -23,6 +23,16 @@ class Category_Dish_Table extends Core_Db_Table_Abstract
      * @var integer
      */
     private $image_id;
+    
+    /**
+     * @var float
+     */
+    public $mean_price = NULL;
+    
+    /**
+     * @var float
+     */
+    public $mean_weight = NULL;
 
     /**
      * @return string
@@ -62,7 +72,7 @@ class Category_Dish_Table extends Core_Db_Table_Abstract
     
     public function initialize()
     {
-        $this->hasMany("id", "Dish_Table", "image_id");
+        $this->hasMany("id", "Dish_Table", "category_id");
         $this->belongsTo("image_id", "Media_Table", "id");
     }
 

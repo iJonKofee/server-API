@@ -5,7 +5,32 @@ class CategoryDishController extends Core_Controller_Abstract
 
     public function manageAction()
     {
-        $this->view->rows = Category_Dish_Table::getInstance()->find();
+        $rows           = Category_Dish_Table::getInstance()->find();
+        $meanPrice      = array();
+        $meanWeight     = array();
+        
+        foreach ($rows as $key => $row)
+        {
+            $dishs = $row->Dish_Table;
+            
+            if (!$dishs->toArray()) continue;
+            
+            $sumWeight = 0;
+            $sumPrice  = 0;
+            
+            foreach ($dishs as $dish)
+            {
+                $sumPrice  += $dish->price();
+                $sumWeight += $dish->weight();
+            }
+            
+            $meanPrice[$row->id()]  = round($sumPrice / count($dishs), 2);
+            $meanWeight[$row->id()] = round($sumWeight / count($dishs), 2);
+        }
+        
+        $this->view->meanPrice      = $meanPrice;
+        $this->view->meanWeight     = $meanWeight;
+        $this->view->rows           = $rows;
         
     }
     

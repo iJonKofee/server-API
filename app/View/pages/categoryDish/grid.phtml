@@ -20,6 +20,12 @@
 			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1">
 				Image
 			</th>
+			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1">
+				Mean price
+			</th>
+			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1">
+				Mean weight
+			</th>
 			<th class="sorting" tabindex="0" aria-controls="tableWithDynamicRows" rowspan="1" colspan="1" style="width: 2%;">
 				Actions
 			</th>
@@ -38,6 +44,16 @@
     				<?php $rowLogo = $row->Media_Table;
     				if ($rowLogo){?>
         				<img src="<?= $row->Media_Table->path()?>" style="width: auto; height: 100px;">
+					<?php }?>
+    			</td>
+    			<td class="v-align-middle" role="name">
+    				<?php if (isset($meanPrice[$row->id()])){?>
+        				<p><?= $meanPrice[$row->id()]?></p>
+					<?php }?>
+    			</td>
+    			<td class="v-align-middle" role="name">
+    				<?php if (isset($meanWeight[$row->id()])){?>
+        				<p><?= $meanWeight[$row->id()]?></p>
 					<?php }?>
     			</td>
     			<td class="v-align-middle">
