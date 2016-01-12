@@ -64,6 +64,10 @@ class Place_Table extends Core_Db_Table_Abstract
      * @var string
      */
     private $datetime_create;
+    /**
+     * @var string
+     */
+    private $description;
 
     /**
      * @return string
@@ -135,6 +139,14 @@ class Place_Table extends Core_Db_Table_Abstract
     protected function getDatetimeCreate()
     {
         return $this->datetime_create;
+    }
+    
+    /**
+     * @return string
+     */
+    protected function getDescription()
+    {
+        return $this->description;
     }
     
     /**
@@ -232,6 +244,17 @@ class Place_Table extends Core_Db_Table_Abstract
     protected function setDatetimeCreate($string)
     {
         $this->datetime_create = $string;
+        
+        return $this;
+    }
+    
+    /**
+     * @param string $string
+     * @return Place_Table
+     */
+    protected function setDescription($string)
+    {
+        $this->description = $string;
         
         return $this;
     }

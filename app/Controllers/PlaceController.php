@@ -31,11 +31,12 @@ class PlaceController extends Core_Controller_Abstract
         $address = $this->getPost('address');
         $geoPoint = $this->getPost('geo_point');
         $phone = $this->getPost('phone');
+        $description = $this->getPost('description');
         $arrTags = explode(',', $this->getPost('tags'));
         
         try
         {
-            $row = $this->getManager()->add($name, $companyId, $categoryId, $cityId, $logo, $address, $geoPoint, $phone);
+            $row = $this->getManager()->add($name, $companyId, $categoryId, $cityId, $logo, $address, $geoPoint, $phone, $description);
             
             foreach ($arrTags as $tag)
             {
@@ -79,6 +80,7 @@ class PlaceController extends Core_Controller_Abstract
         $address = $this->getPost('address');
         $geoPoint = $this->getPost('geo_point');
         $phone = $this->getPost('phone');
+        $description = $this->getPost('description');
         $arrTags = explode(',', $this->getPost('tags'));
         
         $row
@@ -90,6 +92,7 @@ class PlaceController extends Core_Controller_Abstract
             ->geoPoint($geoPoint)
             ->phone($phone)
             ->cityId($cityId)
+            ->description($description)
             ->save()
         ;
 

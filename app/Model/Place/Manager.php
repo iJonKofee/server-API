@@ -5,7 +5,7 @@ class Place_Manager extends Core_Model_Manager
 
     use Core_Singleton;
     
-    public function add($name, $companyId, $categoryId, $cityId, $logo, $address, $geoPoint, $phone)
+    public function add($name, $companyId, $categoryId, $cityId, $logo, $address, $geoPoint, $phone, $description)
     {
         $tbl = $this->getTable();
         
@@ -18,6 +18,7 @@ class Place_Manager extends Core_Model_Manager
             ->geoPoint($geoPoint)
             ->phone($phone)
             ->cityId($cityId)
+            ->description($description)
         ;
         
         $tbl->datetime_create = date("Y-m-d H:i:s");
