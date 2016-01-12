@@ -27,6 +27,30 @@ class Core_UserCenter_Table extends Core_Db_Table_Abstract
     private $type;
 
     /**
+     *
+     * @var string
+     */
+    private $email;
+
+    /**
+     *
+     * @var string
+     */
+    private $phone;
+
+    /**
+     *
+     * @var integer
+     */
+    private $picture;
+
+    /**
+     *
+     * @var integer
+     */
+    private $city_id;
+
+    /**
      * Method to set the value of field login
      *
      * @param string $login
@@ -66,6 +90,50 @@ class Core_UserCenter_Table extends Core_Db_Table_Abstract
     }
 
     /**
+     * @param string $email
+     * @return $this
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * @param string $phone
+     * @return $this
+     */
+    public function setPhone($phone)
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    /**
+     * @param integer $media_id
+     * @return $this
+     */
+    public function setPicture($media_id)
+    {
+        $this->picture = $media_id;
+
+        return $this;
+    }
+
+    /**
+     * @param integer $id
+     * @return $this
+     */
+    public function setCityId($id)
+    {
+        $this->city_id = $id;
+
+        return $this;
+    }
+
+    /**
      * Returns the value of field login
      *
      * @return string
@@ -93,6 +161,38 @@ class Core_UserCenter_Table extends Core_Db_Table_Abstract
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getCityId()
+    {
+        return $this->city_id;
     }
 
 }
