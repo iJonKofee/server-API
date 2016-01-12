@@ -95,9 +95,9 @@
     			</td>
     			<td class="v-align-middle">
 					<div class="btn-group">
-						<button type="button" class="btn btn-xs btn-xs btn-complete" onClick="editRow(this)">
+						<a href="/place/edit?id=<?= $row->id()?>" type="button" class="btn btn-xs btn-xs btn-complete">
 							<i class="fa fa-pencil"></i>
-						</button>
+						</a>
 						<button type="button" class="btn btn-xs btn-xs btn-danger" onClick="deleteRow(this)">
 							<i class="fa fa-trash-o"></i>
 						</button>

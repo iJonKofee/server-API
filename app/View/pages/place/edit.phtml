@@ -1,9 +1,6 @@
-<?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
-<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.iframe-transport.js');?>
 <?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.fileupload.js');?>
-<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.ui.widget.js');?>
-
-<form role="form" id="editFormPlace">
+<script src="//api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
+<form role="form" id="editFormPlace" class="col col-sm-4" style="margin-top: 10px">
 	<div class="row">
 		<div class="col col-sm-4">
             <div class="logo_jk">
@@ -33,26 +30,26 @@
                 <input name="name" type="text" class="form-control" required value="<?= $row->name()?>">
               </div>
           </div>
-          <div class="row">
-              <div class="form-group form-group-default required">
-                <label>Address</label>
-                <input name="address" type="text" class="form-control" required value="<?= $row->address()?>">
-              </div>
-          </div>
+          <div class="row hide">
+    			<div class="form-group form-group-default required">
+    				<label>Address</label>
+    				<input name="address" type="text" class="form-control" required value="<?= $row->address()?>">
+    			</div>
+    		</div>
           <div class="row">
           		<div class="form-group">
                 	<input type="hidden" id="company" class="full-width" name="company_id" value="<?= $row->companyId()?>">
                 </div>
           </div>
+          <div class="row">
+          	<div class="col-sm-12">
+          		<div class="form-group">
+                	<input type="hidden" id="category" class="full-width" name="category_id" value="<?= $row->categoryId()?>">
+                </div>
+            </div>
+          </div>
 		</div>
 	</div>
-  <div class="row">
-  	<div class="col-sm-12">
-  		<div class="form-group">
-        	<input type="hidden" id="category" class="full-width" name="category_id" value="<?= $row->categoryId()?>">
-        </div>
-    </div>
-  </div>
   <div class="row">
   	<div class="col-sm-12">
   		<div class="form-group">
@@ -62,11 +59,14 @@
   </div>
   <div class="row">
   	<div class="col-sm-12">
-      <div class="form-group form-group-default required">
-        <label>Geo point</label>
-        <input name="geo_point" type="text" class="form-control" required value="<?= $row->geoPoint()?>">
+      <div id="geo" class="form-group form-group-default disabled">
+        <label><?= $row->geoPoint() ? $row->geoPoint() : 'Geo point'?></label>
+        <input name="geo_point" type="text" class="form-control hide" required value="<?= $row->geoPoint()?>">
       </div>
     </div>
+  </div>
+  <div class="row">
+	<div id="map" style="width: 100%; height: 300px;"></div>
   </div>
   <div class="row">
   	<div class="col-sm-12">
@@ -78,10 +78,18 @@
   </div>
   <div class="row">
   	<div class="col-sm-12">
+      <div class="form-group form-group-default">
+        <label>Description</label>
+        <input name="description" type="text" class="form-control">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
         <input type="hidden" id="tags" class="full-width" name="tags" value="<?php $tags=[];foreach ($row->Tag_Table as $tag) {$tags[]=$tag->id();} echo implode(',', $tags);?>">
     </div>
   </div>
-  <button class="hide" type="submit"></button>
+  <button id="submitEditPlace" type="button" class="btn btn-primary" type="submit">Save</button>
 </form>
 
 <script>
@@ -148,7 +156,7 @@ function tagsInput()
 
     $('#submitEditPlace').unbind('click');
     $('#submitEditPlace').click(function(){
-    	$('#editFormPlace button[type="submit"]').trigger('click');
+    	$('#editFormPlace').submit();
     });
     
     $('#editFormPlace').unbind('submit');
@@ -161,7 +169,7 @@ function tagsInput()
 			$(this).serialize(),
 			function(data)
 			{
-				location.reload();
+				location.href = '/place/manage';
 			}
 		);
 	});
@@ -179,4 +187,66 @@ function tagsInput()
 	$('[data-logo_jk="upload"]').click(function(){
 		$('#logoUpload').trigger('click');
 	});
+</script>
+
+<!-- Yandex Maps -->
+
+<script>
+	ymaps.ready(function () {
+		var myPlacemark;
+		var myMap;
+		myMap = new ymaps.Map(
+				'map', 
+				{
+					center: [55.751574, 37.573856],
+					zoom: 9,
+					controls: ['zoomControl', 'searchControl',  'fullscreenControl']
+            	},
+            	{
+                	searchControlProvider: 'yandex#search'
+            	}
+            );
+
+        <?php if($row->geoPoint()){?>
+        	var coor = "<?= $row->geoPoint()?>".split(',');
+
+        	myPlacemark = createPlacemark(coor);
+			myMap.geoObjects.add(myPlacemark); 
+	   <?php }?>
+        
+        // Слушаем клик на карте
+		myMap.events.add('click', function (e) {
+			var coords = e.get('coords');
+
+            ymaps.geocode(coords, {
+                results: 1
+            }).then(function (res) {
+                $('input[name="address"]').val(res.geoObjects.get(0).properties.get('name'));
+            });
+
+			$('#geo').find('label').text(coords[0] + '	' + coords[1]);
+			$('#geo').find('input').val(coords);
+
+			// Если метка уже создана – просто передвигаем ее
+			if (myPlacemark) 
+			{
+				myPlacemark.geometry.setCoordinates(coords);
+            }
+            // Если нет – создаем.
+            else 
+			{
+				myPlacemark = createPlacemark(coords);
+				myMap.geoObjects.add(myPlacemark);
+			}
+        });
+
+        // Создание метки
+        function createPlacemark(coords) 
+        {
+            return new ymaps.Placemark(coords,{}, {
+                preset: 'islands#circleDotIcon',
+                iconColor: 'red'
+            });
+        }
+    });
 </script>

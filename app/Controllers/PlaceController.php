@@ -52,8 +52,6 @@ class PlaceController extends Core_Controller_Abstract
     
     public function editAction()
     {
-        $this->view->setRenderLevel(Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
-    
         $id = $this->getParam('id');
     
         $row = $this->getTable()->findFirst($id);
