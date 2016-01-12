@@ -10,8 +10,6 @@ class PlaceController extends Core_Controller_Abstract
     
     public function addAction()
     {
-        $this->view->setRenderLevel(Phalcon\Mvc\View::LEVEL_ACTION_VIEW);
-    
         $this->view->rowsCategory   = Category_Place_Table  ::getInstance()->find();
         $this->view->rowsCompany    = Company_Table         ::getInstance()->find();
         $this->view->rowsCity       = City_Table            ::getInstance()->find();

@@ -1,37 +1,8 @@
 <h3 class="page-title">Place list</h3>
 
-<button type="button" id="btnAdd" class="btn btn-primary btn-cons btn-animated from-left fa fa-plus">
+<a href="/place/add" type="button" id="btnAdd" class="btn btn-primary btn-cons btn-animated from-left fa fa-plus">
 	<span>Add</span>
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">New place</h4>
-      </div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <button id="submitAddPlace" type="button" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+</a>
 
 <?php echo $this->partial('place/grid', $this)?>
 
-<script>
-	$('#btnAdd').click(function(){
-		$.get(
-			'/place/add',
-			function(data)
-			{
-				$('#addModal .modal-body').html(data);
-				$('#addModal').modal('show');
-			}
-		);
-	});
-</script>
