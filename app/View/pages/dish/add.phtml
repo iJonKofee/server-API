@@ -1,0 +1,161 @@
+<?= Phalcon\Tag::javascriptInclude('pages/js/pages.min.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.iframe-transport.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.fileupload.js');?>
+<?= Phalcon\Tag::javascriptInclude('assets/plugins/jquery-upload/jquery.ui.widget.js');?>
+<form role="form" id="addFormDish" enctype="multipart/form-data">
+	<div class="row">
+		<div class="col col-sm-4">
+            <div class="logo_jk">
+            	<div data-logo_jk="upload" class="logo_jk_upload-wrap">
+            		<div class="logo_jk__upload-outer">
+            			<div class="vc-m">
+            				<div class="vc-i">
+            					<span class="logo_jk__upload-text">
+            						<span class="logo_jk__upload-icon">Change image</span>
+            					</span>
+            				</div>
+            			</div>
+            		</div>
+            	</div>
+            	<img id="dish-picture" src="https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg" data-default-src="https://scontent-frt3-1.cdninstagram.com/hphotos-xft1/t51.2885-19/s150x150/11420849_1597556317176701_1107730959_a.jpg" style="width: auto; height: 160px;">
+                <input id="pictureUpload" name="media" type="file" class="hide" data-url="/media/upload">
+                <input id="picture" name="picture" type="text">
+            </div>
+		</div>
+		<div class="col col-sm-8">
+          <div class="row">
+              <div class="form-group form-group-default required">
+                <label>Name</label>
+                <input name="name" type="text" class="form-control" required>
+              </div>
+          </div>
+          <div class="row">
+          		<div class="form-group">
+                	<input type="hidden" id="place" class="full-width" name="place_id">
+                </div>
+          </div>
+          <div class="row">
+          	<div class="col-sm-12">
+          		<div class="form-group">
+                	<input type="hidden" id="category" class="full-width" name="category_id">
+                </div>
+            </div>
+          </div>
+		</div>
+	</div>
+  <div class="row">
+  	<div class="col-sm-9">
+      <div class="form-group form-group-default">
+        <label>Weight</label>
+        <input name="weight" type="text" class="form-control">
+      </div>
+    </div>
+  	<div class="col-sm-3">
+      <div class="form-group form-group-default">
+        <div class="form-group">
+			<input type="hidden" id="weight_unit" class="full-width" name="weight_unit">
+		</div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+      <div class="form-group form-group-default">
+        <label>Price</label>
+        <input name="price" type="text" class="form-control">
+      </div>
+    </div>
+  </div>
+  <div class="row">
+  	<div class="col-sm-12">
+      <div class="form-group form-group-default">
+        <label>Description</label>
+        <input name="description" type="text" class="form-control">
+      </div>
+    </div>
+  </div>
+  <button class="hide" type="submit"></button>
+</form>
+
+<script>
+
+function categorySelect()
+{
+	var data = [];
+	<?php foreach ($rowsCategory as $category) {?>
+		data.push({id: <?= $category->id()?>, text: '<?= $category->name()?>'})
+	<?php }?>
+
+	return data;
+}
+
+function placeSelect()
+{
+	var data = [];
+	<?php foreach ($rowsPlace as $place) {?>
+		data.push({id: <?= $place->id()?>, text: '<?= $place->name()?>'})
+	<?php }?>
+
+	return data;
+}
+
+function weightUnitSelect()
+{
+	var data = [];
+	<?php foreach ($weightUnits as $name => $value) {?>
+		data.push({id: <?= $value?>, text: '<?= $name?>'})
+	<?php }?>
+
+	return data;
+}
+
+
+    $("#place").select2({
+        placeholder: "Place",
+        data: placeSelect()
+    });
+    
+    $("#category").select2({
+        placeholder: "Category",
+        data: categorySelect()
+    });
+    
+    $("#weight_unit").select2({
+        placeholder: "Unit",
+        data: weightUnitSelect()
+    });
+    
+    $('#submitAddDish').unbind('click');
+    $('#submitAddDish').click(function(){
+    	$('#addFormDish button[type="submit"]').trigger('click');
+    });
+    
+    $('#addFormDish').unbind('submit');
+    $('#addFormDish').submit(function(e)
+    {
+		e.preventDefault();
+		url = '/dish/add';
+		$.post(
+			url,
+			$(this).serialize(),
+			function(data)
+			{
+				location.reload();
+			}
+		);
+	});
+
+    $('#pictureUpload').fileupload({
+        dataType: 'json',
+        done: function (e, data) {
+        	var objImage = data.result;
+
+        	$('#dish-picture').attr('src', objImage.path);
+        	$('#picture').val(objImage.id);
+        }
+    });
+	
+	$('[data-logo_jk="upload"]').click(function(){
+		$('#pictureUpload').trigger('click');
+	});
+</script>
