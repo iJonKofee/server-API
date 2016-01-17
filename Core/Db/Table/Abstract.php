@@ -84,5 +84,10 @@ abstract class Core_Db_Table_Abstract extends \Phalcon\Mvc\Model
 	        return $this->$newMethod();
 	    }
 	}
+	
+	public function isEmpty()
+	{
+	    return !$this->toArray();
+	}
 
 }
