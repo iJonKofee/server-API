@@ -198,6 +198,7 @@ class Core_UserCenter_Table extends Core_Db_Table_Abstract
     public function initialize()
     {
         $this->belongsTo("picture", "Media_Table", "id");
+        $this->belongsTo("city_id", "City_Table", "id");
     }
 
 }
