@@ -1,12 +1,5 @@
 <?php
 
-/**
- * @method dishId()
- * @method photo()
- * @method taste()
- * @method satiety()
- * @method quality()
- */
 class Feedback_Dish_Table extends Core_Db_Table_Abstract
 {
     
@@ -17,37 +10,16 @@ class Feedback_Dish_Table extends Core_Db_Table_Abstract
 	 */
 	protected $_tableName = 'dish_feedback';
 
-    /**
-     * @var integer
-     */
-    private $dish_id;
-
-    /**
-     * @var integer
-     */
-    private $photo;
-
-
-    /**
-     * @var integer
-     */
-    private $taste;
-
-    /**
-     * @var integer
-     */
-    private $satiety;
-
-    /**
-     * @var integer
-     */
-    private $quality;
-
-    /**
-     * @var string
-     */
-    private $comment;
-
+	/**
+	 * @var integer
+	 */
+	private $dish_id;
+	
+	/**
+	 * @var integer
+	 */
+	private $feedback_id;
+	
     /**
      * @return number
      */
@@ -59,41 +31,9 @@ class Feedback_Dish_Table extends Core_Db_Table_Abstract
     /**
      * @return number
      */
-    protected function getPhoto()
+    protected function getFeedbackId()
     {
-        return $this->photo;
-    }
-
-    /**
-     * @return number
-     */
-    protected function getTaste()
-    {
-        return $this->taste;
-    }
-
-    /**
-     * @return number
-     */
-    protected function getSatiety()
-    {
-        return $this->satiety;
-    }
-
-    /**
-     * @return number
-     */
-    protected function getQuality()
-    {
-        return $this->quality;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getComment()
-    {
-        return $this->comment;
+        return $this->feedback_id;
     }
 
     /**
@@ -111,61 +51,17 @@ class Feedback_Dish_Table extends Core_Db_Table_Abstract
      * @param integer $id
      * @return Feedback_Dish_Table
      */
-    protected function setPhoto($id)
+    protected function setFeedbackId($id)
     {
-        $this->photo = $id;
-        
-        return $this;
-    }
-    
-    /**
-     * @param integer $number
-     * @return Feedback_Dish_Table
-     */
-    protected function setTaste($number)
-    {
-        $this->taste = $number;
-        
-        return $this;
-    }
-    
-    /**
-     * @param integer $number
-     * @return Feedback_Dish_Table
-     */
-    protected function setSatiety($number)
-    {
-        $this->satiety = $number;
-        
-        return $this;
-    }
-    
-    /**
-     * @param integer $number
-     * @return Feedback_Dish_Table
-     */
-    protected function setQuality($number)
-    {
-        $this->quality = $number;
-        
-        return $this;
-    }
-    
-    /**
-     * @param string $str
-     * @return Feedback_Dish_Table
-     */
-    protected function setComment($str)
-    {
-        $this->comment = $str;
+        $this->feedback_id = $id;
         
         return $this;
     }
     
     public function initialize()
     {
+        $this->belongsTo("feedback_id", "Feedback_Table", "id");
         $this->belongsTo("dish_id", "Dish_Table", "id");
-        $this->belongsTo("photo", "Media_Table", "id");
     }
     
 }

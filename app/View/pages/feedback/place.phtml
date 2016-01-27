@@ -45,22 +45,22 @@
     				<p><?= $row->Place_Table->name()?></p>
     			</td>
     			<td class="v-align-middle">
-    				<?php $rowLogo = $row->Media_Table;
+    				<?php $rowLogo = $row->Feedback_Table->Media_Table;
     				if ($rowLogo){?>
-        				<img src="<?= $row->Media_Table->path()?>" style="width: auto; height: 100px;">
+        				<img src="<?= $rowLogo->path()?>" style="width: auto; height: 100px;">
 					<?php }?>
     			</td>
     			<td class="v-align-middle">
-    				<p><?= $row->comment()?></p>
+    				<p><?= $row->Feedback_Table->comment()?></p>
     			</td>
     			<td class="v-align-middle">
-    				<p><?= $row->taste()?></p>
+    				<p><?= $row->Feedback_Table->taste()?></p>
     			</td>
     			<td class="v-align-middle">
-    				<p><?= $row->satiety()?></p>
+    				<p><?= $row->Feedback_Table->satiety()?></p>
     			</td>
     			<td class="v-align-middle">
-    				<p><?= $row->quality()?></p>
+    				<p><?= $row->Feedback_Table->quality()?></p>
     			</td>
     		</tr>
 		<?php }?>
